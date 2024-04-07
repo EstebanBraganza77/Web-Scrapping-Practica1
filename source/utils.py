@@ -101,11 +101,14 @@ def get_info_from_url(url: str) -> dict:
             num_comments = 0
 
         if num_comments > 0:
-            last_comment = (
-                soup.find("div", class_="da-editor-comments")
-                .find("span", class_="_2PHJq")
-                .text
-            ).strip()
+            try:
+                last_comment = (
+                    soup
+                    .find("span", class_="_2PHJq")
+                    .text
+                ).strip()
+            except:
+                last_comment = ''
 
         results = {
             "image_url": image_url,
