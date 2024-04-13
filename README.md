@@ -11,11 +11,11 @@ main.py
 source
     - utils
     - scrapper
-data
+dataset
     - data.csv
 
 documents
-    - Memoria.pdf
+    - .pdf
 
 ## Cómo usar el código generado
 Parámetros que admite el script y uno o varios ejemplos replicables de su uso.

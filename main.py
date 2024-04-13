@@ -1,9 +1,8 @@
-from source import utils
-from source import scrapper
+import source.scrapper as scrapper
 
 def main():
-    save_path = './data'
-    topics_list =  [
+    save_path = './dataset'
+    topics_list = [
     "Fantasy art",
     "Science fiction art",
     "Anime and manga art",
@@ -24,9 +23,10 @@ def main():
     "Concept art",
     "Comics and graphic novels",
     "Street art and graffiti"
-]
-    data_crawler = scrapper.DeviantArtScraper(max_pages = 30, topics=topics_list, save_path=save_path)
+    ]
+    data_crawler = scrapper.DeviantArtScraper(max_pages = 1, topics=topics_list, save_path=save_path)
     data_crawler.run_scrapper()
+    data_crawler.generate_df()
     data_crawler.save_csv()
 
 if __name__ =='__main__':
