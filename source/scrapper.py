@@ -7,12 +7,12 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 class DeviantArtScraper: 
-    def __init__(self, max_pages, topics):
+    def __init__(self, max_pages: int, topics: list, save_path: str):
         self.max_pages=max_pages
         self.topics=topics
         self.base_url="https://www.deviantart.com/search"
-        self.save_path_csv = './csv_data/images_db.csv'
-        self.save_path_json = './json_data/images_db.csv'
+        self.save_path_csv = save_path + '/images_db.csv'
+        self.save_path_json = save_path + '/images_db.json'
         self.information= {
             'data':[],
             'search_topic':[],

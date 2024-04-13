@@ -6,7 +6,16 @@ Contiene la práctica 1 de la materia Tipología y ciclo de vida de los datos.
 Esteban Braganza Cajas y Ana M. Álvarez Sánchez
 
 ## Archivos que componen el repositorio
+requests.txt
+main.py
+source
+    - utils
+    - scrapper
+data
+    - data.csv
 
+documents
+    - Memoria.pdf
 
 ## Cómo usar el código generado
 Parámetros que admite el script y uno o varios ejemplos replicables de su uso.
