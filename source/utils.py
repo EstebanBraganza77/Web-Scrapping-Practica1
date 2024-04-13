@@ -50,7 +50,7 @@ def get_info_from_url(url: str) -> dict:
         image_favs = convert_views(
             [metric.split(" ")[0] for metric in metrics if "Favourites" in metric][-1]
         )
-        image_com = [
+        num_comments = [
             int(metric.split(" ")[0]) for metric in metrics if "Comments" in metric
         ][0]
         image_views = convert_views(
@@ -95,27 +95,18 @@ def get_info_from_url(url: str) -> dict:
 
         published_date = soup.find("div", class_="_1mcmq").find("time")["datetime"]
 
-        try:
-            num_comments = int(soup.find("span", class_="eVBLr").text)
-        except AttributeError:
-            num_comments = 0
-
         if num_comments > 0:
             try:
-                last_comment = (
-                    soup
-                    .find("span", class_="_2PHJq")
-                    .text
-                ).strip()
+                last_comment = (soup.find("span", class_="_2PHJq").text).strip()
             except:
-                last_comment = ''
+                last_comment = ""
 
         results = {
             "image_url": image_url,
             "image_title": image_title,
             "image_author": image_author,
             "image_favs": image_favs,
-            "image_com": image_com,
+            "image_com": num_comments,
             "image_views": image_views,
             "private_collections": private_collections,
             "tags": tags,
@@ -124,7 +115,6 @@ def get_info_from_url(url: str) -> dict:
             "image_px": image_px,
             "image_size": image_size_mb,
             "published_date": published_date,
-            "num_comments": num_comments,
             "last_comment": last_comment,
         }
 
