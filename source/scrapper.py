@@ -59,13 +59,13 @@ class DeviantArtScraper:
                 page += 1
         # Ceerramos el browser
         self.close_driver()
+        self.generate_df()
 
     def generate_df(self):
         self.df = pd.DataFrame(self.information)
         self.df = pd.concat([self.df.loc[:,['search_topic', 'page_num']], pd.json_normalize(self.df['data'])], axis=1)
         
     def save_csv(self):
-        self.generate_df()
         self.df.to_csv(self.save_path_csv, sep=',')
 
     def save_json(self):
