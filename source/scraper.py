@@ -1,11 +1,14 @@
 import json
 import time
 import requests
+import os
+from typing import Optional
 from bs4 import BeautifulSoup
 import urllib.parse
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from fake_useragent import UserAgent
 
 class DeviantArtScraper: 
     def __init__(self, max_pages: int, topics: list, save_path: str):
@@ -21,6 +24,7 @@ class DeviantArtScraper:
         }
         self.error_links = []
         self.start_driver()
+        self.user_agent = UserAgent()
 
     def close_driver(self):
         self.driver.close()
@@ -35,19 +39,12 @@ class DeviantArtScraper:
             page = 0
             while page < self.max_pages:
                 self.driver.get(search_url)
-                time.sleep(2)
+                time.sleep(3)
                 # Obtenemos links de cada imagen
                 image_classes = self.driver.find_elements(By.CLASS_NAME, "_3Y0hT")
                 image_links = [image.find_element(By.TAG_NAME, 'a').get_attribute('href') for image in image_classes]
-                for link in image_links:
-                    try:
-                        self.information['data'].append(self.get_info_from_url(link))
-                        self.information['search_topic'].append(topic)
-                        self.information['page_num'].append(page)
-                    except Exception as e:
-                        print(f' Ha habido un error al tratar de procesar el siguiente link: {link}, pagina {page}, tema {topic}')
-                        print(e)
-                        self.error_links.append(link)
+                self.navigate_images_links(image_links=image_links, page=page, topic=topic)
+        
                 # Navegamos a la siguiente pagina.
                 try:
                     next_page = self.driver.find_element(By.LINK_TEXT,'Next')
@@ -60,6 +57,18 @@ class DeviantArtScraper:
         # Ceerramos el browser
         self.close_driver()
         self.generate_df()
+    
+    def navigate_images_links(self, image_links: list, page:int, topic: str):
+        for link in image_links:
+            time.sleep(2)
+            try:
+                self.information['data'].append(self.get_info_from_url(link))
+                self.information['search_topic'].append(topic)
+                self.information['page_num'].append(page)
+            except Exception as e:
+                print(f' Ha habido un error al tratar de procesar el siguiente link: {link}, pagina {page}, tema {topic}')
+                print(e)
+                self.error_links.append(link)
 
     def generate_df(self):
         self.df = pd.DataFrame(self.information)
@@ -117,13 +126,13 @@ class DeviantArtScraper:
 
             # En algunos casos metrics devuelve varios valores para favoritos, el correcto será el último
             image_favs = self.convert_views(
-                [metric.split(" ")[0] for metric in metrics if "Favourites" in metric][-1]
+                [metric.split(" ")[0] for metric in metrics if "Favourites" in metric or "Favourite" in metric][-1]
             )
             num_comments = [
-                int(metric.split(" ")[0]) for metric in metrics if "Comments" in metric
+                int(metric.split(" ")[0]) for metric in metrics if "Comments" in metric or "Comment" in metric
             ][0]
             image_views = self.convert_views(
-                [metric.split(" ")[0] for metric in metrics if "Views" in metric][0]
+                [metric.split(" ")[0] for metric in metrics if "Views" in metric or "View" in metric][0]
             )
 
             try:
@@ -169,6 +178,8 @@ class DeviantArtScraper:
                     last_comment = (soup.find("span", class_="_2PHJq").text).strip()
                 except:
                     last_comment = ""
+            else:
+                last_comment = ''
 
             results = {
                 "image_url": image_url,
@@ -188,3 +199,18 @@ class DeviantArtScraper:
             }
 
         return results
+    
+    def download_image(url_image: str, images_folder: Optional[str] = "./deviantart_images"):
+        """
+        Function to download images from url.
+        """
+        # Crea el directorio si no existe
+        if not os.path.exists(images_folder):
+            os.makedirs(images_folder)
+
+        image_title = url_image.split("?")[0].split("/")[-1]
+        response = requests.get(url_image, stream=True)
+        if response.status_code == 200:
+            with open(f"{images_folder}/{image_title}", "wb") as out_file:
+                out_file.write(response.content)
+        del response
