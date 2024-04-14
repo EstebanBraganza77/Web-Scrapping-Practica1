@@ -19,4 +19,33 @@ El repositorio está compuesto por los siguientes archivos:
 ## Cómo usar el código generado
 Parámetros que admite el script y uno o varios ejemplos replicables de su uso.
 
+El scraper de la clase `DeviantArtScraper` toma tres parámetros:
+* La lista de `strings` que buscará.
+* El número de páginas que recorrerá de cada búsqueda, teniendo en cuenta que cada página incluye 24 imágenes.
+* El `path` al directorio donde se guardará el dataset.
+
+Para la ejecución de este scraper se deben seguir los siguientes pasos:
+
+```python
+import source.scraper as scraper
+
+num_pages = 10
+topics_list = ["horses", "ski", "yellow"]
+save_path = "./dataset"
+
+# Crea el objeto de clase DeviantArtScraper
+data_crawler = scraper.DeviantArtScraper(
+        max_pages=num_pages, topics=topics_list, save_path=save_path
+    )
+
+# Ejecuta el método run_scraper()
+data_crawler.run_scraper()
+
+# Guarda los resultados como csv
+data_crawler.save_csv()
+
+```
+
+
+
 ## DOI de Zenodo del dataset generado
