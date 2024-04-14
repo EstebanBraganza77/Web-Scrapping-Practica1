@@ -236,12 +236,15 @@ class DeviantArtScraper:
             except AttributeError:
                 image_px = None
 
-            image_size_mb = float(
-                soup.find("div", class_="_3RVC5")
-                .next_sibling.text.split("px")[1]
-                .strip()
-                .split(" ")[0]
-            )
+            try:
+                image_size_mb = float(
+                    soup.find("div", class_="_3RVC5")
+                    .next_sibling.text.split("px")[1]
+                    .strip()
+                    .split(" ")[0]
+                )
+            except AttributeError:
+                image_size_mb = None
 
             published_date = soup.find("div", class_="_1mcmq").find("time")["datetime"]
 
@@ -252,6 +255,11 @@ class DeviantArtScraper:
                     last_comment = None
             else:
                 last_comment = None
+
+            try:
+                image_license = soup.find("div", class_="_2GljG").text
+            except AttributeError:
+                image_license = None
 
             results = {
                 "image_url": image_url,
@@ -268,6 +276,7 @@ class DeviantArtScraper:
                 "image_size": image_size_mb,
                 "published_date": published_date,
                 "last_comment": last_comment,
+                "image_license": image_license,
             }
 
         return results
