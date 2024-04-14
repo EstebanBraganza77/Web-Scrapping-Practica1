@@ -127,7 +127,7 @@ class DeviantArtScraper:
         """
         Saves the scraped information in CSV format.
         """
-        self.df.to_csv(f"{self.save_path}/images_db.csv")
+        self.df.to_csv(f"{self.save_path}/images_db.csv", index=False)
 
     def save_json(self):
         """
