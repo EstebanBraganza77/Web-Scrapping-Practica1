@@ -35,7 +35,7 @@ python3 main.py
 ```
 
 
-También podemos ejecutar el scraper eligiendo cada uno de estos parámetros, de la siguiente forma:
+También podemos ejecutar el scraper usando python desde la ubicación de este directorio y eligiendo cada uno de estos parámetros, de la siguiente forma:
 
 ```python
 import source.scraper as scraper
@@ -52,22 +52,21 @@ data_crawler = scraper.DeviantArtScraper(
 # Ejecuta el método run_scraper()
 data_crawler.run_scraper()
 
+# Explora dataframe generado
+data_crawler.df
+
 # Guarda los resultados como csv
 data_crawler.save_csv()
 
-```
-El resultado puede guardarse también en formato `json`:
-
-```python
+# Guarda los resultados como json
 data_crawler.save_json()
+
 ```
 
 Y del dataframe obtenido se pueden descargar las imágenes localmente:
 
 ```python
 import pandas as pd
-
-data_crawler.generate_df()
 
 df_images = data_crawler.df
 
@@ -76,7 +75,5 @@ first_image_url = df_images.loc[0, "image_url"]
 data_crawler.download_image(first_image_url)
 
 ```
-
-
 
 ## DOI de Zenodo del dataset generado
