@@ -20,11 +20,22 @@ El repositorio está compuesto por los siguientes archivos:
 Parámetros que admite el script y uno o varios ejemplos replicables de su uso.
 
 El scraper de la clase `DeviantArtScraper` toma tres parámetros:
-* La lista de `strings` que buscará.
-* El número de páginas que recorrerá de cada búsqueda, teniendo en cuenta que cada página incluye 24 imágenes.
-* El `path` al directorio donde se guardará el dataset.
+* `topics`: la lista de `strings` que buscará.
+* `max_pages`: El número de páginas que recorrerá de cada búsqueda, teniendo en cuenta que cada página incluye 24 imágenes.
+* `save_path`: El `path` al directorio donde se guardará el dataset.
 
-Para la ejecución de este scraper se deben seguir los siguientes pasos:
+Se puede ejecutar el script `main.py` y obtener el dataset que se encuentra en ``dataset/images_db.csv`. Para hacerlo, desde el directorio de este repositorio:
+
+```bash
+# Instalamos dependencias
+pip install -r requeriments.txt
+
+# Ejecutamos script
+python3 main.py
+```
+
+
+También podemos ejecutar el scraper eligiendo cada uno de estos parámetros, de la siguiente forma:
 
 ```python
 import source.scraper as scraper
@@ -43,6 +54,26 @@ data_crawler.run_scraper()
 
 # Guarda los resultados como csv
 data_crawler.save_csv()
+
+```
+El resultado puede guardarse también en formato `json`:
+
+```python
+data_crawler.save_json()
+```
+
+Y del dataframe obtenido se pueden descargar las imágenes localmente:
+
+```python
+import pandas as pd
+
+data_crawler.generate_df()
+
+df_images = data_crawler.df
+
+first_image_url = df_images.loc[0, "image_url"]
+
+data_crawler.download_image(first_image_url)
 
 ```
 
