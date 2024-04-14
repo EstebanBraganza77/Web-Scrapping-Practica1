@@ -175,7 +175,6 @@ class DeviantArtScraper:
             soup = BeautifulSoup(page.text, "html.parser")
 
             # Main image fields
-            image_page = url
             image_url = soup.find("div", class_="_2SlAD").find("img")["src"]
             image_title = soup.find("div", class_="U2aSH").text
             image_author = soup.find("span", class_="_12F3u").text
