@@ -17,9 +17,9 @@ class DeviantArtScraper:
         Initializes a DeviantArtScraper object.
 
         Args:
-            max_pages (int): The maximum number of pages to scrape for each topic.
-            topics (list): A list of topics to search for on DeviantArt.
-            save_path (str): The path where the scraped data will be saved.
+            max_pages: The maximum number of pages to scrape for each topic.
+            topics: A list of strings to search for on DeviantArt.
+            save_path: The path where the scraped data will be saved.
 
         Attributes:
             max_pages (int): The maximum number of pages to scrape for each topic.
@@ -29,8 +29,6 @@ class DeviantArtScraper:
             information (dict): A dictionary to store the scraped information.
             error_links (list): A list to store any error links encountered during scraping.
 
-        Returns:
-            None
         """
         self.max_pages = max_pages
         self.topics = topics
