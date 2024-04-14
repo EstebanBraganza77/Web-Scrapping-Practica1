@@ -46,7 +46,7 @@ class DeviantArtScraper:
     def start_driver(self) -> None:
         self.driver = webdriver.Chrome()
 
-    def run_scrapper(self) -> None:
+    def run_scraper(self) -> None:
         """
         Method responsible for running the scraper.
         """

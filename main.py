@@ -28,7 +28,7 @@ def main():
     data_crawler = scraper.DeviantArtScraper(
         max_pages=15, topics=topics_list, save_path=save_path
     )
-    data_crawler.run_scrapper()
+    data_crawler.run_scraper()
     data_crawler.save_csv()
 
 
