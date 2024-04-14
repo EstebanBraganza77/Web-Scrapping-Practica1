@@ -82,6 +82,8 @@ class DeviantArtScraper:
 
         # Close browser
         self.close_driver()
+
+        # Generate dataframe
         self.generate_df()
 
     def navigate_images_links(
@@ -173,6 +175,7 @@ class DeviantArtScraper:
             soup = BeautifulSoup(page.text, "html.parser")
 
             # Main image fields
+            image_page = url
             image_url = soup.find("div", class_="_2SlAD").find("img")["src"]
             image_title = soup.find("div", class_="U2aSH").text
             image_author = soup.find("span", class_="_12F3u").text
@@ -262,6 +265,7 @@ class DeviantArtScraper:
                 image_license = None
 
             results = {
+                "image_page": url,
                 "image_url": image_url,
                 "image_title": image_title,
                 "image_author": image_author,
@@ -282,7 +286,7 @@ class DeviantArtScraper:
         return results
 
     def download_image(
-        url_image: str, images_folder: str = "./deviantart_images"
+        self, url_image: str, images_folder: str = "./deviantart_images"
     ) -> None:
         """
         Downloads an image from a given URL.
@@ -291,7 +295,9 @@ class DeviantArtScraper:
         if not os.path.exists(images_folder):
             os.makedirs(images_folder)
 
+        # Extract image name from url
         image_title = url_image.split("?")[0].split("/")[-1]
+
         response = requests.get(url_image, stream=True)
         if response.status_code == 200:
             with open(f"{images_folder}/{image_title}", "wb") as out_file:
