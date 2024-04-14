@@ -8,7 +8,6 @@ import urllib.parse
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from fake_useragent import UserAgent
 
 class DeviantArtScraper: 
     def __init__(self, max_pages: int, topics: list, save_path: str):
@@ -24,8 +23,7 @@ class DeviantArtScraper:
         }
         self.error_links = []
         self.start_driver()
-        self.user_agent = UserAgent()
-
+   
     def close_driver(self):
         self.driver.close()
 
