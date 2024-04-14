@@ -56,7 +56,7 @@ class DeviantArtScraper:
             search_url = f"{self.base_url}?q={parsed_topic}"
             page = 0
             while page < self.max_pages:
-                print(f"Entrando en pagina {page}")
+                print(f"Entering page {page}")
                 self.driver.get(search_url)
                 time.sleep(3)
 
@@ -75,7 +75,7 @@ class DeviantArtScraper:
                     next_page = self.driver.find_element(By.LINK_TEXT, "Next")
                     search_url = next_page.get_attribute("href")
                 except Exception as e:
-                    print(f"Error al encontrar una nueva pagina {topic}, page: {page}")
+                    print(f"Error finding a new page {topic}, page: {page}")
                     print(e)
                     break
                 page += 1
