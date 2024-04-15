@@ -2,7 +2,7 @@
 Contiene la práctica 1 de la materia `Tipología y ciclo de vida de los datos`, segundo semestre, curso 2023-2024.
 
 ## Nombres de los integrantes del grupo
-Esteban Braganza Cajas y Ana M. Álvarez Sánchez
+Esteban Braganza Cajas y Ana Álvarez Sánchez
 
 ## Archivos que componen el repositorio
 
