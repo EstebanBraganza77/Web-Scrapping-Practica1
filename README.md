@@ -77,3 +77,5 @@ data_crawler.download_image(first_image_url)
 ```
 
 ## DOI de Zenodo del dataset generado
+
+DOI: https://doi.org/10.5281/zenodo.10974440 
