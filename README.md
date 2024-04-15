@@ -75,6 +75,27 @@ first_image_url = df_images.loc[0, "image_url"]
 data_crawler.download_image(first_image_url)
 
 ```
+## Descripción del dataset
+
+El dataset está compuesto por los siguientes campos:
+* `search_topic`: la imagen es resultado de la búsqueda por este tema
+* `page_num`: la imagen aparece en este número de página de la búsqueda
+* `image_page`: enlace a la página con la información de la imagen
+* `image_url`: enlace a la imagen
+* `image_title`: título de la imagen
+* `image_author`: autor/a de la imagen
+* `image_favs`: número de veces que le han dado a “me gusta” en la imagen
+* `image_com`: número de comentarios que tiene la imagen
+* `image_views`: número de vistas a la imagen
+* `private_collections`: número de veces que ha sido incluida en una colección privada
+* `tags`: etiquetas que se le han asignado a la imagen para facilitar su descubrimiento
+* `location`: país o localización geográfica, si el autor la quiere identificar
+description: campo de texto abierto creado por el autor, que acompaña a la imagen. Puede incluir detalles técnicos o enlaces a las redes sociales del autor/a.
+* `image_px`: dimensiones de la imagen, en pixeles
+* `image_size`: peso de la imagen en MB.
+* `published_date`: fecha de publicación de la imagen.
+* `last_comment`: último comentario añadido a la imagen.
+* `license`: licencia de la imagen
 
 ## DOI de Zenodo del dataset generado
 
